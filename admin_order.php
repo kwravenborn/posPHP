@@ -6,7 +6,6 @@
         header('location: index.php');
     }
 
-
     
     
 ?>
@@ -49,8 +48,7 @@
     </nav>
     <!-- end เมนูข้างบน -->
 
-   
-  
+
     
     <div class="container-fluid">
         <div class="row">
@@ -82,13 +80,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
+                            <a href="admin_stock.php" class="nav-link active" aria-current="page">
                                 <i data-feather="archive"></i>
                                 <span class="ml-2">ข้อมูล Stock สินค้า</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin_order.php" class="nav-link active" aria-current="page">
+                            <a href="#" class="nav-link active" aria-current="page">
                                 <i data-feather="bar-chart-2"></i>
                                 <span class="ml-2">ข้อมูลการขาย</span>
                             </a>
@@ -101,29 +99,33 @@
 
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Products</li>
+                        <li class="breadcrumb-item">Orders</li>
                         <li class="breadcrumb-item active" aria-current="page">Overview</li>
                     </ol>
                 </nav>
-                <h1 class="h2">ข้อมูล Stock สินค้า</h1>
+                <h1 class="h2">รายการสั่งซื้อ</h1>
                 <div class="row">
                     <div class="col-12 col-xl-20 mb-4 mb-lg-0">
                         <div class="card">
-                            <h5 class="card-header">Stock List</h5>
+                            <h5 class="card-header">Products List</h5>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">ID</th>
-                                                <th scope="col">วันที่ stock สินค้า</th>
+                                                <th scope="col">วันที่</th>
                                                 <th scope="col">ชื่อสินค้า</th>
-                                                <th scope="col">จำนวนที่ stock สินค้า</th>
+                                                <th scope="col">ชื่อลูกค้า</th>
+                                                <th scope="col">เบอร์โทรศัพท์</th>
+                                                <th scope="col">ที่อยู่</th>
+                                                <th scope="col">อีเมล</th>
+                                                <th scope="col">พนักงานขาย</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                $check_data = $conn->prepare("SELECT * FROM stockpd ORDER BY date DESC");
+                                                $check_data = $conn->prepare("SELECT * FROM products");
                                                 $check_data->execute();
                                                 
                                                 while ($row = $check_data->fetch(PDO::FETCH_ASSOC)) {
@@ -131,10 +133,14 @@
                                                 <form action="admin_user.php" method="POST">
                                                     <tr>
                                                         <th scope="row"><?php echo $row['id']; ?></th>
-                                                        <td><?php echo $row['date']; ?></td>
-                                                        <td><?php echo $row['name']; ?></td>
-                                                        <td><?php echo $row['amount']; ?></td>
-                                                        <td><a href="admin_edit_stock.php?update_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary">Edit</a></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><a href="" class="btn btn-sm btn-primary">Edit</a></td>
                                                         <td><a href="?delete_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" >Delete</a></td>
                                                     </tr>
                                                 </form>

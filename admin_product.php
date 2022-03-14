@@ -6,7 +6,20 @@
         header('location: index.php');
     }
 
+    if (isset($_REQUEST['delete_id'])) {
+        $id = $_REQUEST['delete_id'];
 
+        $select_stmt = $conn->prepare('SELECT * FROM products WHERE id = :id');
+        $select_stmt->bindParam(':id', $id);
+        $select_stmt->execute();
+        $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $delete_stmt = $conn->prepare('DELETE FROM products WHERE id = :id');
+        $delete_stmt->bindParam(':id', $id);
+        $delete_stmt->execute();
+
+        header("location: admin_product.php");
+    }
     
     
 ?>
@@ -202,13 +215,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
+                            <a href="admin_stock.php" class="nav-link active" aria-current="page">
                                 <i data-feather="archive"></i>
                                 <span class="ml-2">ข้อมูล Stock สินค้า</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
+                            <a href="admin_order.php" class="nav-link active" aria-current="page">
                                 <i data-feather="bar-chart-2"></i>
                                 <span class="ml-2">ข้อมูลการขาย</span>
                             </a>
@@ -260,10 +273,10 @@
                                                         <td><?php echo $row['name']; ?></td>
                                                         <td><?php echo $row['description']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
-                                                        <td><?php echo $row['price']; ?></td>
+                                                        <td><?php echo number_format($row['price']); ?> บาท</td>
                                                         <td><?php echo $row['amount']; ?></td>
                                                         <td><?php echo $row['status']; ?></td>
-                                                        <td><a href="" class="btn btn-sm btn-primary">Edit</a></td>
+                                                        <td><a href="admin_edit_product.php?update_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary">Edit</a></td>
                                                         <td><a href="?delete_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" >Delete</a></td>
                                                     </tr>
                                                 </form>

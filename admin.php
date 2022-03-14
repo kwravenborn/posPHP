@@ -93,15 +93,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
+                            <a href="admin_product.php" class="nav-link active" aria-current="page">
                                 <i data-feather="package"></i>
                                 <span class="ml-2">ข้อมูลสินค้า</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
-                                <i data-feather="list"></i>
-                                <span class="ml-2">ข้อมูลประเภทสินค้า</span>
+                            <a href="admin_stock.php" class="nav-link active" aria-current="page">
+                                <i data-feather="archive"></i>
+                                <span class="ml-2">ข้อมูล Stock สินค้า</span>
                             </a>
                         </li>
                         <li class="nav-item">

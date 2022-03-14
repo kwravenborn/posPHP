@@ -9,7 +9,7 @@
     if (isset($_REQUEST['update_id'])) {
         try {
             $id = $_REQUEST['update_id'];
-            $select_stmt = $conn->prepare('SELECT * FROM users WHERE id = :id');
+            $select_stmt = $conn->prepare('SELECT * FROM customers WHERE id = :id');
             $select_stmt->bindParam(':id', $id);
             $select_stmt->execute();
             $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
@@ -21,34 +21,31 @@
 
     if (isset($_REQUEST['btn_update'])) {
         try {
-            $username = $_REQUEST['username'];
             $firstname = $_REQUEST['firstname'];
             $lastname = $_REQUEST['lastname'];
             $address = $_REQUEST['address'];
             $phone = $_REQUEST['phone'];
             $email = $_REQUEST['email'];
             $birthday = $_REQUEST['birthday'];
-            $urole = $_REQUEST['urole'];
 
-            $update_stmt = $conn->prepare("UPDATE users SET username = :username, firstname = :firstname, lastname = :lastname, address = :address, phone = :phone, email = :email, birthday = :birthday, urole = :urole WHERE id = :id");
-            $update_stmt->bindParam(':username', $username);
+            $update_stmt = $conn->prepare("UPDATE customers SET firstname = :firstname, lastname = :lastname, address = :address, phone = :phone, email = :email, birthday = :birthday WHERE id = :id");
             $update_stmt->bindParam(':firstname', $firstname);
             $update_stmt->bindParam(':lastname', $lastname);
             $update_stmt->bindParam(':address', $address);
             $update_stmt->bindParam(':phone', $phone);
             $update_stmt->bindParam(':email', $email);
             $update_stmt->bindParam(':birthday', $birthday);
-            $update_stmt->bindParam(':urole', $urole);
             $update_stmt->bindParam(':id', $id);
             $update_stmt->execute();
 
-            header("location: admin_user.php");
+            header("location: admin_customer.php");
             
         } catch(PDOException $e) {
             $e->getMessage();
         }
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,13 +57,9 @@
 </head>
 <body>
     <div class="container">
-    <br>
+        <br>
     <form action="" method="POST">
-    <h2 style="text-align:center">แก้ไขข้อมูลพนักงาน</h2>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" aria-describebdy="username" value="<?php echo $row['username'];?>" placeholder="<?php echo $row['username'];?>">
-                    </div>
+    <h2 style="text-align:center">แก้ไขข้อมูลลูกค้า</h2>
                     <div class="mb-3">
                         <label for="firstname" class="form-label">ชื่อ</label>
                         <input type="text" class="form-control" name="firstname" aria-describebdy="firstname" value="<?php echo $row['firstname'];?>" placeholder="<?php echo $row['firstname'];?>">
@@ -91,17 +84,9 @@
                         <label for="birthday" class="form-label">วันเกิด</label>
                         <input type="date" class="form-control" name="birthday" aria-describebdy="birthday" value="<?php echo $row['birthday'];?>">
                     </div>
-                    <div class="mb-3">
-                        <label for="urole" class="form-label">ระดับสมาชิก</label>
-                        <br>
-                        <select name="urole">
-                            <option value="Employee">พนักงาน</option>
-                            <option value="Admin">แอดมิน</option>
-                        </select>
-                    </div>
                     <div>
                         <input type="submit" name="btn_update" class="btn btn-success" value="แก้ไขข้อมูล">
-                        <a href="admin_user.php" class="btn btn-danger">ยกเลิก</a>
+                        <a href="admin_customer.php" class="btn btn-danger">ยกเลิก</a>
                     </div>
                 </form>
     </div>

@@ -18,7 +18,7 @@
         $delete_stmt->bindParam(':id', $id);
         $delete_stmt->execute();
 
-        header("location: admin_user.php");
+        header("location: admin_customer.php");
     }
 ?>
 
@@ -161,13 +161,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
+                            <a href="admin_stock.php" class="nav-link active" aria-current="page">
                                 <i data-feather="archive"></i>
                                 <span class="ml-2">ข้อมูล Stock สินค้า</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
+                            <a href="admin_order.php" class="nav-link active" aria-current="page">
                                 <i data-feather="bar-chart-2"></i>
                                 <span class="ml-2">ข้อมูลการขาย</span>
                             </a>
