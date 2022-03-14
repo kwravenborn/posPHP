@@ -24,10 +24,10 @@
 
                     if ($username == $row['username']) {
                         if ($password == $row['password']) {
-                            if ($row['urole'] == 'admin') {
+                            if ($row['urole'] == 'Admin') {
                                 $_SESSION['admin_login'] = $row['id'];
                                 header("location: admin.php");
-                            } else {
+                            } else if($row['urole'] == 'Employee') {
                                 $_SESSION['employee_login'] = $row['id'];
                                 header("location: employee.php");
                             }

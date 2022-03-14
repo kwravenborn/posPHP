@@ -6,6 +6,23 @@
         header('location: index.php');
     }
 
+    if (isset($_REQUEST['delete_id'])) {
+        $id = $_REQUEST['delete_id'];
+
+        $select_stmt = $conn->prepare('SELECT * FROM users WHERE id = :id');
+        $select_stmt->bindParam(':id', $id);
+        $select_stmt->execute();
+        $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $delete_stmt = $conn->prepare('DELETE FROM users WHERE id = :id');
+        $delete_stmt->bindParam(':id', $id);
+        $delete_stmt->execute();
+
+        header("location: admin_user.php");
+    }
+
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +34,7 @@
     <title>Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
@@ -109,15 +127,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="birthday" class="form-label">วันเกิด</label>
-                        <input type="text" class="form-control" name="birthday" aria-describebdy="birthday">
+                        <input type="date" class="form-control" name="birthday" aria-describebdy="birthday">
                     </div>
                     <div class="mb-3">
                         <label for="urole" class="form-label">ระดับสมาชิก</label>
                         <br>
-                        <input type="radio" name="urole" value="employee">
-                        <label for="employee"><small>พนักงาน</small></label>
-                        <input type="radio" name="urole" value="admin">
-                        <label for="admin"><small>แอดมิน</small></label>
+                        <select name="urole">
+                            <option value="Employee">พนักงาน</option>
+                            <option value="Admin">แอดมิน</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">รหัสผ่าน</label>
@@ -138,87 +156,6 @@
         </div>
     </div>
 
-        <!-- The Modal แก้ไขข้อมูล -->
-        <div class="modal" id="editModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">แก้ไขข้อมูล</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="admin_edit_user.php" method="POST">
-                    <?php if(isset($_SESSION['error'])) { ?>
-                         <div class="alert alert-danger" role="alert">
-                             <?php 
-                                echo $_SESSION['error'];
-                                unset($_SESSION['error']);
-                             ?>
-                         </div>
-                    <?php } ?>
-                    <?php if(isset($_SESSION['success'])) { ?>
-                         <div class="alert alert-success" role="alert">
-                             <?php 
-                                echo $_SESSION['success'];
-                                unset($_SESSION['success']);
-                             ?>
-                         </div>
-                    <?php } ?>
-                    <?php if(isset($_SESSION['warning'])) { ?>
-                         <div class="alert alert-warning" role="alert">
-                             <?php 
-                                echo $_SESSION['warning'];
-                                unset($_SESSION['warning']);
-                             ?>
-                         </div>
-                    <?php } ?>
-                    
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" aria-describebdy="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="firstname" class="form-label">ชื่อ</label>
-                        <input type="text" class="form-control" name="firstname" aria-describebdy="firstname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="lastname" class="form-label">นามสกุล</label>
-                        <input type="text" class="form-control" name="lastname" aria-describebdy="lastname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">ที่อยู่</label>
-                        <input type="text" class="form-control" name="address" aria-describebdy="address">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
-                        <input type="text" class="form-control" name="phone" aria-describebdy="phone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">อีเมล</label>
-                        <input type="text" class="form-control" name="email" aria-describebdy="email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="birthday" class="form-label">วันเกิด</label>
-                        <input type="text" class="form-control" name="birthday" aria-describebdy="birthday">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">รหัสผ่าน</label>
-                        <input type="password" class="form-control" name="password" aria-describebdy="password">
-                    </div>
-                                <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <input type="submit" name="admin_edit_user.php" class="btn btn-success" value="แก้ไขข้อมูล">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>
-    </div>
     
     <div class="container-fluid">
         <div class="row">
@@ -244,15 +181,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">
+                            <a href="admin_product.php" class="nav-link active" aria-current="page">
                                 <i data-feather="package"></i>
                                 <span class="ml-2">ข้อมูลสินค้า</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link active" aria-current="page">
-                                <i data-feather="list"></i>
-                                <span class="ml-2">ข้อมูลประเภทสินค้า</span>
+                                <i data-feather="archive"></i>
+                                <span class="ml-2">ข้อมูล Stock สินค้า</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -293,7 +230,7 @@
                                                 <th scope="col">เบอร์โทรศัพท์</th>
                                                 <th scope="col">อีเมล</th>
                                                 <th scope="col">วันเกิด</th>
-                                                <th scope="col">ระดับสมาชิก</th>
+                                                <th scope="col">ระดับพนักงาน</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -314,7 +251,8 @@
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['birthday']; ?></td>
                                                         <td><?php echo $row['urole']; ?></td>
-                                                        <td><a href="#" name="edituser" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" value="<?php echo $row['id']; ?>">Edit</a></td>
+                                                        <td><a href="admin_edit_user.php?update_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary">Edit</a></td>
+                                                        <td><a href="?delete_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" >Delete</a></td>
                                                     </tr>
                                                 </form>
                                             <?php } ?>
