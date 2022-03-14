@@ -274,7 +274,7 @@
                                                         <td><?php echo $row['description']; ?></td>
                                                         <td><?php echo $row['type']; ?></td>
                                                         <td><?php echo number_format($row['price']); ?> บาท</td>
-                                                        <td><?php echo $row['amount']; ?></td>
+                                                        <td><?php echo $row['amount']; ?> ชิ้น</td>
                                                         <td><?php echo $row['status']; ?></td>
                                                         <td><a href="admin_edit_product.php?update_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary">Edit</a></td>
                                                         <td><a href="?delete_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" >Delete</a></td>

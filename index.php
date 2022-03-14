@@ -16,6 +16,7 @@
 </head>
 <body>
   <div class="container">
+    <br>
     <h3 class"mt-4">Login POS</h3>
     <hr>
     <form action="login.php" method="post">

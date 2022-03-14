@@ -121,6 +121,8 @@
                                                 <th scope="col">ที่อยู่</th>
                                                 <th scope="col">อีเมล</th>
                                                 <th scope="col">พนักงานขาย</th>
+                                                <th scope="col">เลขที่ใบเสร็จ</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -133,6 +135,7 @@
                                                 <form action="admin_user.php" method="POST">
                                                     <tr>
                                                         <th scope="row"><?php echo $row['id']; ?></th>
+                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>

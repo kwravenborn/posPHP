@@ -95,8 +95,9 @@
                         <label for="urole" class="form-label">ระดับสมาชิก</label>
                         <br>
                         <select name="urole">
-                            <option value="Employee">พนักงาน</option>
-                            <option value="Admin">แอดมิน</option>
+                            <option value="<?php echo $row['urole'];?>">--<?php echo $row['urole'];?>--</option>
+                            <option value="Employee">Employee</option>
+                            <option value="Admin">Admin</option>
                         </select>
                     </div>
                     <div>

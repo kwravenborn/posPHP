@@ -105,7 +105,7 @@
                         <li class="breadcrumb-item active" aria-current="page">Overview</li>
                     </ol>
                 </nav>
-                <h1 class="h2">ข้อมูล Stock สินค้า</h1>
+                <h1 class="h2">ข้อมูลการ Stock สินค้า</h1>
                 <div class="row">
                     <div class="col-12 col-xl-20 mb-4 mb-lg-0">
                         <div class="card">
@@ -133,7 +133,7 @@
                                                         <th scope="row"><?php echo $row['id']; ?></th>
                                                         <td><?php echo $row['date']; ?></td>
                                                         <td><?php echo $row['name']; ?></td>
-                                                        <td><?php echo $row['amount']; ?></td>
+                                                        <td><?php echo $row['amount']; ?> ชิ้น</td>
                                                         <td><a href="admin_edit_stock.php?update_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary">Edit</a></td>
                                                         <td><a href="?delete_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger" >Delete</a></td>
                                                     </tr>
