@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin_login'])) {
 if (isset($_REQUEST['update_id'])) {
     try {
         $id = $_REQUEST['update_id'];
-        $select_stmt = $conn->prepare('SELECT * FROM products WHERE id = :id');
+        $select_stmt = $conn->prepare('SELECT * FROM customers WHERE id = :id');
         $select_stmt->bindParam(':id', $id);
         $select_stmt->execute();
         $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
@@ -20,24 +20,24 @@ if (isset($_REQUEST['update_id'])) {
 
 if (isset($_REQUEST['btn_update'])) {
     try {
-        $name = $_REQUEST['name'];
-        $description = $_REQUEST['description'];
-        $type = $_REQUEST['type'];
-        $price = $_REQUEST['price'];
-        $amount = $_REQUEST['amount'];
-        $status = $_REQUEST['status'];
+        $firstname = $_REQUEST['firstname'];
+        $lastname = $_REQUEST['lastname'];
+        $address = $_REQUEST['address'];
+        $phone = $_REQUEST['phone'];
+        $email = $_REQUEST['email'];
+        $birthday = $_REQUEST['birthday'];
 
-        $update_stmt = $conn->prepare("UPDATE products SET name = :name, description = :description, type = :type, price = :price, amount = :amount, status = :status WHERE id = :id");
-        $update_stmt->bindParam(':name', $name);
-        $update_stmt->bindParam(':description', $description);
-        $update_stmt->bindParam(':type', $type);
-        $update_stmt->bindParam(':price', $price);
-        $update_stmt->bindParam(':amount', $amount);
-        $update_stmt->bindParam(':status', $status);
+        $update_stmt = $conn->prepare("UPDATE customers SET firstname = :firstname, lastname = :lastname, address = :address, phone = :phone, email = :email, birthday = :birthday WHERE id = :id");
+        $update_stmt->bindParam(':firstname', $firstname);
+        $update_stmt->bindParam(':lastname', $lastname);
+        $update_stmt->bindParam(':address', $address);
+        $update_stmt->bindParam(':phone', $phone);
+        $update_stmt->bindParam(':email', $email);
+        $update_stmt->bindParam(':birthday', $birthday);
         $update_stmt->bindParam(':id', $id);
         $update_stmt->execute();
 
-        header("location: admin_product.php");
+        header("location: admin_manageCus.php");
     } catch (PDOException $e) {
         $e->getMessage();
     }
@@ -216,12 +216,11 @@ if (isset($_REQUEST['btn_update'])) {
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
-
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <tbody>
                                     <?php
-                                    $check_data = $conn->prepare("SELECT * FROM users");
+                                    $check_data = $conn->prepare("SELECT * FROM users ");
                                     $check_data->execute();
 
                                     while ($row = $check_data->fetch(PDO::FETCH_ASSOC)) {
@@ -234,7 +233,6 @@ if (isset($_REQUEST['btn_update'])) {
                                     <?php } ?>
                                 </tbody>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -249,55 +247,52 @@ if (isset($_REQUEST['btn_update'])) {
                                 </a>
                             </div>
                         </li>
-
-                    </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
                 <div class="container">
                     <br>
-                    <form action="" method="POST">
-                        <?php {
+                    <tbody>
+                        <form action="" method="POST">
+                            <?php
                             $id = $_REQUEST['update_id'];
-                            $select_stmt = $conn->prepare('SELECT * FROM products WHERE id = :id');
+                            $select_stmt = $conn->prepare('SELECT * FROM customers WHERE id = :id');
                             $select_stmt->bindParam(':id', $id);
                             $select_stmt->execute();
-                            $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
-
-                        ?>
-                            <h2 style="text-align:center">แก้ไขข้อมูลสินค้า</h2>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">ชื่อสินค้า</label>
-                                <input type="text" class="form-control" name="name" aria-describebdy="name" value="<?php echo $row['name']; ?>" placeholder="<?php echo $row['name']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">คำอธิบาย</label>
-                                <input type="text" class="form-control" name="description" aria-describebdy="description" value="<?php echo $row['description']; ?>" placeholder="<?php echo $row['description']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="type" class="form-label">ประเภท</label>
-                                <input type="text" class="form-control" name="type" aria-describebdy="type" value="<?php echo $row['type']; ?>" placeholder="<?php echo $row['type']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="price" class="form-label">ราคา</label>
-                                <input type="text" class="form-control" name="price" aria-describebdy="price" value="<?php echo $row['price']; ?>" placeholder="<?php echo $row['price']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount" class="form-label">จำนวนที่เหลือ</label>
-                                <input type="text" class="form-control" name="amount" aria-describebdy="amount" value="<?php echo $row['amount']; ?>" placeholder="<?php echo $row['amount']; ?>" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="status" class="form-label">สถานะ</label>
-                                <input type="text" class="form-control" name="status" aria-describebdy="status" value="<?php echo $row['status']; ?>" placeholder="<?php echo $row['status']; ?>" readonly>
-                            </div>
-                            <div>
-                                <input type="submit" name="btn_update" class="btn btn-success" value="แก้ไขข้อมูล">
-                                <a href="admin_product.php" class="btn btn-danger">ยกเลิก</a>
-                            </div>
-                        <?php } ?>
-
-                    </form>
+                            $row = $select_stmt->fetch(PDO::FETCH_ASSOC); {
+                            ?>
+                                <h2 style="text-align:center">แก้ไขข้อมูลลูกค้า</h2>
+                                <div class="mb-3">
+                                    <label for="firstname" class="form-label">ชื่อ</label>
+                                    <input type="text" class="form-control" name="firstname" aria-describebdy="firstname" value="<?php echo $row['firstname']; ?>" placeholder="<?php echo $row['firstname']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lastname" class="form-label">นามสกุล</label>
+                                    <input type="text" class="form-control" name="lastname" aria-describebdy="lastname" value="<?php echo $row['lastname']; ?>" placeholder="<?php echo $row['lastname']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">ที่อยู่</label>
+                                    <input type="text" class="form-control" name="address" aria-describebdy="address" value="<?php echo $row['address']; ?>" placeholder="<?php echo $row['address']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
+                                    <input type="text" class="form-control" name="phone" aria-describebdy="phone" value="<?php echo $row['phone']; ?>" placeholder="<?php echo $row['phone']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">อีเมล</label>
+                                    <input type="text" class="form-control" name="email" aria-describebdy="email" value="<?php echo $row['email']; ?>" placeholder="<?php echo $row['email']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="birthday" class="form-label">วันเกิด</label>
+                                    <input type="date" class="form-control" name="birthday" aria-describebdy="birthday" value="<?php echo $row['birthday']; ?>">
+                                </div>
+                                <div>
+                                    <input type="submit" name="btn_update" class="btn btn-success" value="แก้ไขข้อมูล">
+                                    <a href="admin_manageCus.php" class="btn btn-danger">ยกเลิก</a>
+                                </div>
+                            <?php } ?>
+                        </form>
+                    </tbody>
                 </div>
 
                 <!-- Footer -->
@@ -315,11 +310,6 @@ if (isset($_REQUEST['btn_update'])) {
 
         </div>
         <!-- End of Page Wrapper -->
-
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
 
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

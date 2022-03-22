@@ -5,7 +5,7 @@
     
     if  (isset($_POST['login'])) {
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
 
         if (empty($username)) {
             $_SESSION['error'] = 'กรุณากรอก username';
@@ -27,7 +27,7 @@
                             if ($row['urole'] == 'Admin') {
                                 $_SESSION['admin_login'] = $row['id'];
                                 header("location: admin.php");
-                            } else if($row['urole'] == 'Employee') {
+                            } else {
                                 $_SESSION['employee_login'] = $row['id'];
                                 header("location: employee.php");
                             }
